@@ -33,7 +33,10 @@ public class ArtisanProfileService {
             throw new ValidationException("Only users with ARTISAN role can create a profile");
         }
 
-
+        // check if profile already exists
+        if(artisanProfileRepository.existsBYUserId(userId)) {
+            throw new ValidationException("Artisan profile already exists for this user");
+        }
     }
 
 }
