@@ -8,5 +8,5 @@ public class ArtisanProfileRequest {
     private Double hourlyRate;
     private Double latitude;
     private Double longitude;
-    private Double locationName;
+    private String locationName;
 }

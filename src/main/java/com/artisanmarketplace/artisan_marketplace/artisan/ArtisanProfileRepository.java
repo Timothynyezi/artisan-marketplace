@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface ArtisanProfileRepository extends JpaRepository<ArtisanProfile, UUID>{
     Optional<ArtisanProfile> findByUserId(UUID userId);
 
-    boolean existsBYUserId(UUID userId);
+    boolean existsByUserId(UUID userId);
 }
