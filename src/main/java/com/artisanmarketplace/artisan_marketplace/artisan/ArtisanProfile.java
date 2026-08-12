@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 
 @Entity
 @Table(name = "artisan_profiles")
@@ -63,10 +65,13 @@ public class ArtisanProfile {
         // required by JPA
     }
 
-    public ArtisanProfile(User user, String bio, Double hourlyRate) {
+    public ArtisanProfile(User user, String bio, Double hourlyRate, Double latitude, Double longitude, String locationName) {
         this.user = user;
         this.bio = bio;
         this.hourlyRate = hourlyRate;
+        this.latitude = latitude;
+        this. longitude = longitude;
+        this.locationName = locationName;
     }
 
     // Convenience method to check if profile is complete enough for matching
@@ -84,16 +89,23 @@ public class ArtisanProfile {
         return Math.min(1.0, score / 4.0); // Normalize to 0-1
     }
     // Intentional, controlled mutation methods - not blanket setters
-    public void updateProfile(String bio, Double hourlyRate, String locationName) {
-        this.bio = bio;
-        this.hourlyRate = hourlyRate;
-        this.locationName = locationName;
+    public void updateProfile(String bio, Double hourlyRate, Double latitude, Double longitude,  String locationName) {
+        if (bio != null) this.bio = bio;
+        if (hourlyRate != null) this.hourlyRate = hourlyRate;
+        if (latitude != null) this.latitude = latitude;
+        if (longitude != null) this.longitude = longitude;
+        if (locationName != null) this.locationName = locationName;
+
     }
 
     public void recordNewRating(double newRating) {
         double totalScore = (this.avgRating * this.reviewCount) + newRating;
         this.reviewCount += 1;
         this.avgRating = totalScore / this.reviewCount;
+    }
+
+    public void toggleActive() {
+        this.isActive = !this.isActive;
     }
 
     @Override

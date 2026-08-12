@@ -5,13 +5,12 @@ import java.util.UUID;
 
 @Data
 public class ArtisanProfileResponse {
-    private UUID Id;
+    private UUID id;
     private UUID userId;
     private String userFullName;
     private String userEmail;
     private String bio;
-    private String hourlyRate;
-    private Double hourlyRates;
+    private Double hourlyRate;
     private Double latitude;
     private Double longitude;
     private String locationName;
