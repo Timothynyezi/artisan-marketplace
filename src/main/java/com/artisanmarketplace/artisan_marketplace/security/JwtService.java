@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.security.KeyStore;
 import java.util.Date;
 import java.util.UUID;
 
@@ -17,19 +16,19 @@ public class JwtService {
     private final long accessTokenExpirationMs;
     private final long refreshTokenExpirationMs;
 
-    public JwtService(@Value("${jwt.secret") String secret,
-                      @Value("${jwt.access-token-expiration_ms") long accessTokenExpirationMs,
+    public JwtService(@Value("${jwt.secret}") String secret,
+                      @Value("${jwt.access-token-expiration-ms}") long accessTokenExpirationMs,
                       @Value("${jwt.refresh-token-expiration-ms}") long refreshTokenExpirationMs
     ){
-        this.signingKey = KeyStore.hmacShaKeyFor(secret.getBytes());
+        this.signingKey = Keys.hmacShaKeyFor(secret.getBytes());
         this.accessTokenExpirationMs = accessTokenExpirationMs;
         this.refreshTokenExpirationMs = refreshTokenExpirationMs;
     }
     public String generateAccessToken(UUID userId, String role) {
-        return buildToken(UserId, role, accessTokenExpirationMs);
+        return buildToken(userId, role, accessTokenExpirationMs);
     }
     public String generateRefreshToken(UUID userId, String role) {
-        return buildToken(UserId, role, refreshTokenExpirationMs);
+        return buildToken(userId, role, refreshTokenExpirationMs);
     }
     private String buildToken(UUID userId, String role, long expirationMs) {
         Date now = new Date();
