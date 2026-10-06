@@ -21,4 +21,10 @@ public class AuthService {
         User user = userService.registerUser(request);
         return buildAuthResponse(user);
     }
+
+    private AuthResponse buildAuthResponse(User user) {
+        String accessToken = jwtService.generateAccessToken(user.getId(), user.getRole().name());
+
+        String refreshToken = jwtService.generateRefreshToken(user.getId(), user.getRole().name());
+    }
 }
