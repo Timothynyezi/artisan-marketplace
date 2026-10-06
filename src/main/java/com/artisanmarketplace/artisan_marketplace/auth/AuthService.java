@@ -14,4 +14,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
     
+    private final UserService userService;
+    private final JwtService jwtService;
+
+    public AuthResponse register(RegisterRequest request) {
+        User user = userService.registerUser(request);
+        return buildAuthResponse(user);
+    }
 }
