@@ -10,3 +10,8 @@ import com.artisanmarketplace.artisan_marketplace.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+    
+}
