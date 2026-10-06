@@ -46,6 +46,10 @@ public class JwtService {
         Claims claims = parseClaims(token);
         return UUID.fromString(claims.getSubject());
     }
+    public String extractRole(String token) {
+        Claims claims = parseClaims(token);
+        return claims.get("role", String.class);
+    }
     public boolean isTokenValid(String token) {
         try {
             Claims claims = parseClaims(token);
