@@ -26,5 +26,14 @@ public class AuthService {
         String accessToken = jwtService.generateAccessToken(user.getId(), user.getRole().name());
 
         String refreshToken = jwtService.generateRefreshToken(user.getId(), user.getRole().name());
+
+        UserResponse userResponse = new UserResponse(
+            user.getId(),
+            user.getEmail(),
+            user.getFullName(),
+            user.getRole().name()
+        );
+
+        return new AuthResponse(accessToken, refreshToken, userResponse);
     }
 }
