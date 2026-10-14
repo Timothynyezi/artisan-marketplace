@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableMethodSecurity
@@ -46,17 +47,25 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable) // enable later if you add a separate frontend
+                .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public: auth endpoints
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        // Public: browsing artisans (GET only — PUT/POST to /me require auth)
                         .requestMatchers(HttpMethod.GET, "/api/v1/artisans/**").permitAll()
-                        // Public: Paystack webhook (Paystack signs its own requests)
                         .requestMatchers("/api/v1/webhooks/**").permitAll()
-                        // Everything else requires a valid JWT
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((req, res, authException) -> {
+                            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            res.setContentType("application/json");
+                            res.getWriter().write("{\"message\":\"Authentication required\",\"errorCode\":\"UNAUTHORIZED\"}");
+                        })
+                        .accessDeniedHandler((req, res, accessDeniedException) -> {
+                            res.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            res.setContentType("application/json");
+                            res.getWriter().write("{\"message\":\"Access denied\",\"errorCode\":\"ACCESS_DENIED\"}");
+                        })
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
