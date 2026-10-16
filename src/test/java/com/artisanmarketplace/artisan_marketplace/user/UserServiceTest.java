@@ -20,5 +20,13 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class UserServiceTest {
+@ExtendWith(MockitoExtension.class)
+ class UserServiceTest {
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @InjectMocks
+    private UserService userService;
+
+    // registerUser
 }
