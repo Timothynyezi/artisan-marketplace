@@ -1,5 +1,8 @@
 package com.artisanmarketplace.artisan_marketplace.common.exception;
 
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
         return build(HttpStatus.FORBIDDEN, ex.getMessage(), "ACCESS_DENIED");
+    }
+        @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleSpringAuthorizationDenied(AuthorizationDeniedException ex) {
+        return build(HttpStatus.FORBIDDEN, "Access denied", "ACCESS_DENIED");
+    }
+
+    @ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleSpringAuthenticationMissing(AuthenticationCredentialsNotFoundException ex) {
+        return build(HttpStatus.FORBIDDEN, "Authentication required", "UNAUTHORIZED");
     }
 
     @ExceptionHandler(ApplicationException.class)
