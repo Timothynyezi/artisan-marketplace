@@ -7,6 +7,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.artisanmarketplace.artisan_marketplace.trade.ArtisanTrade;
+import com.artisanmarketplace.artisan_marketplace.trade.Trade;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -53,6 +59,9 @@ public class ArtisanProfile {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+    @OneToMany(mappedBy = "artisan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ArtisanTrade> trades = new ArrayList<>();
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -96,6 +105,15 @@ public class ArtisanProfile {
         if (longitude != null) this.longitude = longitude;
         if (locationName != null) this.locationName = locationName;
 
+    }
+
+        public void addTrade(Trade trade) {
+        ArtisanTrade artisanTrade = new ArtisanTrade(this, trade);
+        this.trades.add(artisanTrade);
+    }
+
+    public void removeTrade(Trade trade) {
+        this.trades.removeIf(at -> at.getTrade().getId().equals(trade.getId()));
     }
 
     public void recordNewRating(double newRating) {
