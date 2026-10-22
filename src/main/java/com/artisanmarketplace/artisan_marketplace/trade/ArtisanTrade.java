@@ -1,7 +1,7 @@
 package com.artisanmarketplace.artisan_marketplace.trade;
 
 import com.artisanmarketplace.artisan_marketplace.artisan.ArtisanProfile;
-import jakarta.persistance.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -13,22 +13,23 @@ import java.util.UUID;
 @Getter
 @IdClass(ArtisanTrade.ArtisanTradeId.class)
 public class ArtisanTrade {
+
     @Id
-    @ManyToOne(fetch = FetchType.Lazy)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artisan_id", nullable = false)
     private ArtisanProfile artisan;
 
     @Id
-    @ManyToOne(fetch = FetchType.Lazy)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trade_id", nullable = false)
     private Trade trade;
 
     protected ArtisanTrade() {
-        // Required by JPA
+        // required by JPA
     }
 
     public ArtisanTrade(ArtisanProfile artisan, Trade trade) {
-        this.name = name;
+        this.artisan = artisan;
         this.trade = trade;
     }
 
@@ -53,8 +54,7 @@ public class ArtisanTrade {
 
         @Override
         public int hashCode() {
-            return Objects.hash(artisan, trade)
+            return Objects.hash(artisan, trade);
         }
     }
-
 }

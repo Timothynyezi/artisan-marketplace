@@ -1,6 +1,6 @@
 package com.artisanmarketplace.artisan_marketplace.trade;
 
-import jakarta.persistance.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -18,7 +18,7 @@ public class Trade {
     @Column(nullable = false, unique = true)
     private TradeName name;
 
-    protected TradeName() {
+    protected Trade() {
         // Required by JPA
     }
 
