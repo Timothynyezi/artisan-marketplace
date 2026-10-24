@@ -1,6 +1,6 @@
 package com.artisanmarketplace.artisan_marketplace.job;
 
-import com.artisanmarketplace.artisan_marketplace.job.dto.JobResponse;
+import com.artisanmarketplace.artisan_marketplace.job.dto.JobSummaryResponse;
 import com.artisanmarketplace.artisan_marketplace.security.JwtService;
 import com.artisanmarketplace.artisan_marketplace.trade.TradeName;
 import org.junit.jupiter.api.Test;

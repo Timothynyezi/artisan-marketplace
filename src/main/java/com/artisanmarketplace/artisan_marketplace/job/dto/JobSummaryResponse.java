@@ -5,7 +5,7 @@ import com.artisanmarketplace.artisan_marketplace.job.JobStatus;
 
 import java.util.UUID;
 
-public record JobResponse(
+public record JobSummaryResponse(
         UUID id,
         String title,
         JobStatus status,

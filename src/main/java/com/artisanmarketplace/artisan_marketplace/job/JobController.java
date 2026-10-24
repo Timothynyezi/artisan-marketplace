@@ -1,7 +1,7 @@
 package com.artisanmarketplace.artisan_marketplace.job;
 
 import com.artisanmarketplace.artisan_marketplace.job.dto.JobCreateRequest;
-import com.artisanmarketplace.artisan_marketplace.job.dto.JobResponse;
+import com.artisanmarketplace.artisan_marketplace.job.dto.JobSummaryResponse;
 import com.artisanmarketplace.artisan_marketplace.security.SecurityUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class JobController {
 
     @PostMapping
     @PreAuthorize("hasRole('CLIENT')") // <-- Added here
-    public ResponseEntity<JobResponse> createJob(@Valid @RequestBody JobCreateRequest request) {
+    public ResponseEntity<JobSummaryResponse> createJob(@Valid @RequestBody JobCreateRequest request) {
         UUID clientId = SecurityUtils.getCurrentUserId();
         
         Job job = jobService.createJob(
@@ -50,8 +50,8 @@ public class JobController {
         return ResponseEntity.noContent().build();
     }
 
-    private JobResponse mapToResponse(Job job) {
-        return new JobResponse(
+    private JobSummaryResponse mapToResponse(Job job) {
+        return new JobSummaryResponse(
                 job.getId(),
                 job.getTitle(),
                 job.getStatus(),
