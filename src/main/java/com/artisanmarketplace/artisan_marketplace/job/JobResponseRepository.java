@@ -6,5 +6,7 @@ import java.util.UUID;
 
 public interface JobResponseRepository extends JpaRepository<JobResponse, UUID> {
     List<JobResponse> findByJobId(UUID jobId);
-    boolean existsByjobIdAndArtisanId(UUID jobId, UUID artisanId);
+     boolean existsByjobIdAndArtisanId(UUID jobId, UUID artisanId);
+
+    public boolean existsByJobIdAndArtisanId(UUID jobId, UUID artisanId);
 }
