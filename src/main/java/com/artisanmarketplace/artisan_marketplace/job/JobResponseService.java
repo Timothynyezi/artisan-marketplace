@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -86,7 +87,7 @@ public class JobResponseService {
         // 2. Reject all other proposals for this job
         List<JobResponse> otherProposals = jobResponseRepository.findByJobId(jobId);
         for (JobResponse other : otherProposals) {
-            if (!other.getId().equals(proposalId)) {
+            if (!java.util.Objects.equals(other.getId(), proposalId)) {
                 other.markAsRejected();
                 jobResponseRepository.save(other);
             }

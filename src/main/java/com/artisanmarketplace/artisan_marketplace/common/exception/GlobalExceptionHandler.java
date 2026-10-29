@@ -25,10 +25,10 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.BAD_REQUEST, ex.getMessage(), "VALIDATION_ERROR");
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
-        return build(HttpStatus.FORBIDDEN, ex.getMessage(), "ACCESS_DENIED");
-    }
+    // // @ExceptionHandler(AccessDeniedException.class)
+    // // public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
+    // //     return build(HttpStatus.FORBIDDEN, ex.getMessage(), "ACCESS_DENIED");
+    // }
         @ExceptionHandler(AuthorizationDeniedException.class)
     public ResponseEntity<ErrorResponse> handleSpringAuthorizationDenied(AuthorizationDeniedException ex) {
         return build(HttpStatus.FORBIDDEN, "Access denied", "ACCESS_DENIED");
@@ -56,5 +56,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(org.springframework.web.servlet.resource.NoResourceFoundException.class)
     public ResponseEntity<ErrorResponse> handleNoResource(org.springframework.web.servlet.resource.NoResourceFoundException ex) {
         return build(HttpStatus.NOT_FOUND, ex.getMessage(), "NOT_FOUND");
+    }
+
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleSpringAccessDenied(org.springframework.security.access.AccessDeniedException ex) {
+        return build(HttpStatus.FORBIDDEN, "Access denied", "ACCESS_DENIED");
     }
 }

@@ -70,6 +70,7 @@ class JobControllerTest {
     @Test
     @WithMockUser(username = "00000000-0000-0000-0000-000000000001", roles = "CLIENT")
     void shouldAllowCreateJobWhenClient() throws Exception {
+          
         Job mockJob = mock(Job.class);
         when(mockJob.getId()).thenReturn(UUID.randomUUID());
         when(mockJob.getTitle()).thenReturn("Fix sink");
