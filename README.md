@@ -147,4 +147,4 @@ Composition over Inheritance: User and ArtisanProfile are separate entities shar
 Stateless Security: No server-side sessions. The application relies entirely on short-lived JWTs and explicit resource-level ownership checks in the service layer.
 
 License
-This project is for educational and portfolio purposes.
+This project is for portfolio purposes.
